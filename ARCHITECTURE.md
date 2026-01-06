@@ -12,33 +12,42 @@ PIUS Academy je full-stack aplikacija sa:
 
 ```
 PIUSupis/
-├── app/
-│   ├── Http/
-│   │   ├── Controllers/Api/        # API kontroleri
-│   │   │   ├── AuthController.php
-│   │   │   ├── StudentController.php
-│   │   │   ├── ContractController.php
-│   │   │   ├── InvoiceController.php
+├── backend/                        # Laravel aplikacija
+│   ├── app/
+│   │   ├── Http/
+│   │   │   ├── Controllers/Api/    # API kontroleri
+│   │   │   │   ├── AuthController.php
+│   │   │   │   ├── StudentController.php
+│   │   │   │   ├── ContractController.php
+│   │   │   │   ├── InvoiceController.php
+│   │   │   │   └── ...
+│   │   │   └── Requests/           # Form validacija
+│   │   │       └── StoreStudentRequest.php
+│   │   ├── Models/                 # Eloquent modeli
+│   │   │   ├── Student.php
+│   │   │   ├── Contract.php
+│   │   │   ├── Invoice.php
+│   │   │   ├── Payment.php
 │   │   │   └── ...
-│   │   └── Requests/               # Form validacija
-│   │       └── StoreStudentRequest.php
-│   ├── Models/                     # Eloquent modeli
-│   │   ├── Student.php
-│   │   ├── Contract.php
-│   │   ├── Invoice.php
-│   │   ├── Payment.php
-│   │   └── ...
-│   ├── Mail/                       # Email klase
-│   └── Providers/                  # Service provideri
-├── config/                         # Konfiguracija
-├── database/
-│   ├── migrations/                 # Migracije
-│   ├── seeders/                    # Seederi
-│   └── factories/                  # Factories za testiranje
-├── routes/
-│   ├── api.php                     # API rute
-│   └── web.php                     # Web rute
-├── storage/                        # Fajlovi i logovi
+│   │   ├── Mail/                   # Email klase
+│   │   └── Providers/              # Service provideri
+│   ├── config/                     # Konfiguracija
+│   ├── database/
+│   │   ├── migrations/             # Migracije
+│   │   ├── seeders/                # Seederi
+│   │   └── factories/              # Factories za testiranje
+│   ├── routes/
+│   │   ├── api.php                 # API rute
+│   │   └── web.php                 # Web rute
+│   ├── storage/                    # Fajlovi i logovi
+│   ├── public/                     # Public folder
+│   ├── resources/
+│   │   └── views/
+│   │       └── pdf/                # PDF template-i
+│   ├── tests/                      # Testovi
+│   ├── .env.example                # Primer .env
+│   ├── composer.json               # PHP zavisnosti
+│   └── README.md
 ├── frontend/                       # React aplikacija
 │   ├── src/
 │   │   ├── components/             # React komponente
@@ -53,15 +62,12 @@ PIUSupis/
 │   │   ├── types/                  # TypeScript tipovi
 │   │   └── App.tsx
 │   ├── public/                     # Statički fajlovi
-│   └── package.json
-├── public/                         # Laravel public folder
-├── resources/
-│   └── views/
-│       └── pdf/                    # PDF template-i
-├── tests/                          # Testovi
-├── .env.example                    # Primer .env
-├── composer.json                   # PHP zavisnosti
-└── README.md
+│   ├── package.json                # Node zavisnosti
+│   └── README.md
+├── README.md                       # Root README
+├── DEPLOYMENT.md                   # Instrukcije za server
+├── QUICK_START.md                  # Brzi početak
+└── ARCHITECTURE.md                 # Ovaj fajl
 ```
 
 ## Tok podataka

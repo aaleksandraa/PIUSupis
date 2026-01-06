@@ -3,11 +3,9 @@
 ## Brzi pregled
 
 Ovaj projekat se sastoji od:
-- **Backend:** Laravel 12 aplikacija (PHP)
-- **Frontend:** React aplikacija (Node.js)
+- **Backend:** Laravel 12 aplikacija (PHP) - u `backend/` direktorijumu
+- **Frontend:** React aplikacija (Node.js) - u `frontend/` direktorijumu
 - **Baza:** PostgreSQL ili MySQL
-
-Frontend je ugniježđen u `backend/frontend/` direktorijumu.
 
 ## Korak 1: Priprema servera
 
@@ -53,6 +51,8 @@ sudo chown -R $USER:$USER .
 ## Korak 3: Backend setup
 
 ```bash
+cd backend
+
 # Instalacija zavisnosti
 composer install --no-dev --optimize-autoloader
 
@@ -99,6 +99,8 @@ MAIL_FROM_NAME="PIUS Academy"
 ```bash
 php artisan migrate --force
 php artisan db:seed --class=ContractTemplateSeeder --force
+
+cd ..
 ```
 
 ## Korak 4: Frontend build
@@ -113,6 +115,7 @@ npm install --production
 npm run build
 
 # Rezultat je u frontend/dist/
+
 cd ..
 ```
 
@@ -151,7 +154,7 @@ server {
     ssl_prefer_server_ciphers on;
 
     # Root direktorijum
-    root /var/www/pius-academy/public;
+    root /var/www/pius-academy/backend/public;
     index index.php index.html;
 
     # Logging
@@ -231,8 +234,8 @@ sudo chown -R www-data:www-data /var/www/pius-academy
 
 # Dozvole
 sudo chmod -R 755 /var/www/pius-academy
-sudo chmod -R 775 /var/www/pius-academy/storage
-sudo chmod -R 775 /var/www/pius-academy/bootstrap/cache
+sudo chmod -R 775 /var/www/pius-academy/backend/storage
+sudo chmod -R 775 /var/www/pius-academy/backend/bootstrap/cache
 ```
 
 ## Korak 8: PHP-FPM konfiguracija
@@ -257,14 +260,14 @@ sudo systemctl restart php8.2-fpm
 sudo crontab -e
 
 # Dodajte sledeću liniju:
-* * * * * cd /var/www/pius-academy && php artisan schedule:run >> /dev/null 2>&1
+* * * * * cd /var/www/pius-academy/backend && php artisan schedule:run >> /dev/null 2>&1
 ```
 
 ## Korak 10: Monitoring i logovanje
 
 ```bash
 # Proverite log fajlove
-tail -f /var/www/pius-academy/storage/logs/laravel.log
+tail -f /var/www/pius-academy/backend/storage/logs/laravel.log
 tail -f /var/log/nginx/pius-academy-error.log
 tail -f /var/log/php8.2-fpm.log
 
@@ -330,10 +333,10 @@ tail -f /var/log/php8.2-fpm.log
 
 ```bash
 # Proverite Laravel log
-tail -f /var/www/pius-academy/storage/logs/laravel.log
+tail -f /var/www/pius-academy/backend/storage/logs/laravel.log
 
 # Regenerirajte cache
-cd /var/www/pius-academy
+cd /var/www/pius-academy/backend
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
@@ -349,7 +352,7 @@ sudo systemctl status postgresql
 psql -h 127.0.0.1 -U pius_user -d pius_academy
 
 # Proverite .env
-cat /var/www/pius-academy/.env | grep DB_
+cat /var/www/pius-academy/backend/.env | grep DB_
 ```
 
 ### Frontend ne učitava

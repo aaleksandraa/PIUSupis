@@ -12,6 +12,8 @@ cd PIUSupis
 ### 2. Backend setup
 
 ```bash
+cd backend
+
 # Instalacija zavisnosti
 composer install
 
@@ -26,19 +28,26 @@ php artisan migrate
 
 # Seedovanje template-a
 php artisan db:seed --class=ContractTemplateSeeder
+
+cd ..
 ```
 
 ### 3. Frontend setup
 
 ```bash
 cd frontend
+
+# Instalacija zavisnosti
 npm install
+
+cd ..
 ```
 
 ### 4. Pokretanje
 
 **Terminal 1 - Backend:**
 ```bash
+cd backend
 php artisan serve
 # http://localhost:8000
 ```
@@ -65,12 +74,14 @@ Detaljne instrukcije su u `DEPLOYMENT.md` fajlu.
 
 2. **Backend:**
    ```bash
+   cd backend
    composer install --no-dev --optimize-autoloader
    cp .env.example .env
    php artisan key:generate
    # Uredite .env sa vašim podacima
    php artisan migrate --force
    php artisan db:seed --class=ContractTemplateSeeder --force
+   cd ..
    ```
 
 3. **Frontend:**
@@ -78,6 +89,7 @@ Detaljne instrukcije su u `DEPLOYMENT.md` fajlu.
    cd frontend
    npm install --production
    npm run build
+   cd ..
    ```
 
 4. **Nginx konfiguracija** - vidi `DEPLOYMENT.md`
@@ -97,17 +109,20 @@ Detaljne instrukcije su u `DEPLOYMENT.md` fajlu.
 
 ```
 PIUSupis/
-├── app/                    # Laravel aplikacija
+├── backend/                # Laravel aplikacija
+│   ├── app/
+│   ├── config/
+│   ├── database/
+│   ├── routes/
+│   ├── storage/
+│   ├── .env
+│   ├── composer.json
+│   └── README.md
 ├── frontend/               # React aplikacija
 │   ├── src/
 │   ├── public/
-│   └── package.json
-├── config/                 # Laravel konfiguracija
-├── database/               # Migracije i seederi
-├── routes/                 # API rute
-├── storage/                # Fajlovi i logovi
-├── .env.example            # Primer .env fajla
-├── .env.production.example # Primer za produkciju
+│   ├── package.json
+│   └── README.md
 ├── README.md               # Detaljne instrukcije
 ├── DEPLOYMENT.md           # Instrukcije za server
 └── QUICK_START.md          # Ovaj fajl
@@ -116,29 +131,31 @@ PIUSupis/
 ## Česti problemi
 
 ### "Database connection error"
-- Proverite `.env` konfiguraciju
+- Proverite `backend/.env` konfiguraciju
 - Proverite da li je baza dostupna
 - Za PostgreSQL: `psql -h 127.0.0.1 -U postgres`
 
 ### "Frontend ne učitava"
-- Proverite da li je `npm run dev` pokrenuta
-- Proverite `FRONTEND_URL` u `.env`
+- Proverite da li je `npm run dev` pokrenuta u `frontend/` direktorijumu
+- Proverite `FRONTEND_URL` u `backend/.env`
 - Očistite cache: `npm run build`
 
 ### "500 Internal Server Error"
-- Proverite log: `tail -f storage/logs/laravel.log`
-- Regenerirajte cache: `php artisan config:cache`
+- Proverite log: `tail -f backend/storage/logs/laravel.log`
+- Regenerirajte cache: `php artisan config:cache` (iz `backend/` direktorijuma)
 
 ## Korisni komandi
 
 ```bash
-# Backend
+# Backend (iz backend/ direktorijuma)
+cd backend
 php artisan tinker                    # PHP shell
 php artisan migrate:fresh --seed      # Reset baze
 php artisan cache:clear               # Očisti cache
 php artisan config:cache              # Cache konfiguraciju
 
-# Frontend
+# Frontend (iz frontend/ direktorijuma)
+cd frontend
 npm run build                          # Build za produkciju
 npm run preview                        # Pregled build-a
 npm run dev                            # Development server
